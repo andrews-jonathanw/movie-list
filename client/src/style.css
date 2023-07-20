@@ -44,5 +44,10 @@ body {
 
 .info-item {
   overflow-wrap: break-word;
-
 }
+
+.movie-title:hover {
+  cursor: pointer;
+}
+
+

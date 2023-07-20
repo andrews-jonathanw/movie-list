@@ -36,6 +36,14 @@ var Movie = (props) => {
         {movieInfo.map((pair, index) => (
           <li className='info-item' key={index}>{pair[0]}: {pair[1]}</li>
         ))}
+        <button id='watch-toggle' type='button' onClick={(e) => {
+        props.movie.watched = !props.movie.watched
+        if (props.movie.watched === true) {
+          e.currentTarget.innerText = 'Watched';
+        } else {
+          e.currentTarget.innerText = 'Not Watched';
+        }
+        CheckWatched(props.movie, props.watchList);}}>{props.movie.watched ? 'Watched' : 'Not Watched'}</button>
       </ul>
       )
       return (<></>)
@@ -44,18 +52,11 @@ var Movie = (props) => {
 
   return(
     <div className='movie-tile'>
-      <div className='movie-item' onClick={(e) => onClick()}>
-      <li>{props.movie.title}</li>
+      <div className='movie-item'>
+      <li onClick={(e) => onClick()} className='movie-title'>{props.movie.title}</li>
       <div className='movie-info'>{infoList()}</div>
       </div>
-      <button id='watch-toggle' type='button' onClick={(e) => {
-        props.movie.watched = !props.movie.watched
-        if (props.movie.watched === true) {
-          e.currentTarget.innerText = 'Watched';
-        } else {
-          e.currentTarget.innerText = 'Not Watched';
-        }
-        CheckWatched(props.movie, props.watchList);}}>{props.movie.watched ? 'Watched' : 'Not Watched'}</button>
+
     </div>
   );
 }
