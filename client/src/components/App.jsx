@@ -16,12 +16,12 @@ const App = (props) => {
   const [addInput, setAddInput] = useState('');
   // watched movies
   const [watched, setWatched] = useState([]);
+  // to be watched movies
+  const [toWatch, setToWatched] = useState([]);
   /**********************************/
 
   /******** Handles Inputs **********/
   function handleInputChange (e) {
-    console.log('input changing!');
-    console.log(e.target.id);
     // use event id to choose which if case we enter
     if(e.target.id === 'movie-search') {
       setQuery(e.target.value);
@@ -33,8 +33,6 @@ const App = (props) => {
 
   /******** Handles Clicks **********/
   function handleClick (e) {
-    console.log(e);
-    console.log('handleClick invoked!');
     // use event id to choose which if case we enter
     if (e.id === 'search-button') {
       if (e.innerText === 'Search') {
@@ -51,7 +49,6 @@ const App = (props) => {
 
   /******** Handles Search **********/
   function handleSearch () {
-    console.log('handleSearch invoked!');
     // if query is empty show all movies
     if (query === undefined) {
       setFilteredMovies(movies);
@@ -81,7 +78,6 @@ const App = (props) => {
     }
     // push new title into movies array
     movies.push({title: addInput, watched: false});
-    console.log(movies);
     // set both states of movies and the filtered movies
     // movies contains all movies and filtered shows only the movies we wont to be shown
     // movies only ever grows in size, filtered gets reset after each search
@@ -93,16 +89,31 @@ const App = (props) => {
   /**********************************/
 
   /***** Handles Watched *******/
-  function handleWatched () {
+  function handleWatched (e) {
+    // console.log('e from handleWatched', e);
     // filters movie data for watched movies
     var watchFilter = movies.filter(movie => movie.watched);
-    console.log(watchFilter);
+    //console.log(watchFilter);
     if (watchFilter.length > 0) {
       setWatched(watchFilter);
       setFilteredMovies(watched);
     } else {
-      setWatched(['Watched list is empty!']);
+      setWatched([]);
       setFilteredMovies(watched);
+    }
+    console.log(moviesFiltered);
+  }
+  /**********************************/
+
+  /***** Handles To-Watch *******/
+  function handleToWatched () {
+    //console.log('movies when towatch clicky', movies);
+    var toWatchFilter = movies.filter(movie => (!movie.watched));
+    //console.log('movies when to-watchy', toWatchFilter);
+    if (toWatchFilter.length > 0) {
+      setFilteredMovies(toWatchFilter);
+    } else {
+      setFilteredMovies(toWatchFilter);
     }
     console.log(moviesFiltered);
   }
@@ -114,8 +125,8 @@ const App = (props) => {
       <AddMovie movies={movies} value={addInput} change={handleInputChange} clickFn={handleClick}/>
       <Search value={query} change={handleInputChange} clickFn={handleClick}/>
       <button type='button' id='watched' onClick={(e) => (handleWatched())}>Watched</button>
-      <button type='button' id='to-watch' onClick={(e) => (console.log('clicked to-watch'))}>To-Watch</button>
-      <MovieList movies={moviesFiltered} watchList={watched}/>
+      <button type='button' id='to-watch' onClick={(e) => (handleToWatched())}>To-Watch</button>
+      <MovieList movies={moviesFiltered} watchList={watched} toWatch={toWatch}/>
     </div>
   )
 };
