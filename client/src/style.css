@@ -2,5 +2,32 @@ body {
   font-family: sans-serif, arial;
 }
 
+.MovieList {
 
+}
+
+.movie-tile {
+  display: grid;
+  grid-template-columns: 100px 150px 100px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header header header'
+    'main main sidebar'
+    'footer footer footer';
+  height: 50px;
+  width: 400px;
+  border: 2px solid black;
+  margin: 1px;
+  list-style: none;
+}
+
+.movie-item {
+  grid-area: main;
+  margin: 15px;
+  text-transform: capitalize;
+}
+
+#watch-toggle {
+  grid-area: sidebar;
+}
 

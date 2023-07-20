@@ -1,15 +1,16 @@
 import React from 'react';
+
 var AddMovie = (props) => {
   return (
     <form className='add-form form-inline'>
       <input
         type='text'
-        value={props.addInput}
+        value={props.value}
         id='movie-add'
         placeholder='Add a new movie...'
         onChange={props.change}
       />
-      <button className='add-button' type='button' onClick={(e) => (props.clickFn(props.addInput))}>Add</button>
+      <button id='add-button' type='button' onClick={(e) => (props.clickFn(e.target, props.value))}>Add</button>
     </form>
   );
 }

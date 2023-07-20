@@ -1,6 +1,8 @@
 import React from 'react';
 import Movie from './Movie.jsx'
 import MovieList from './MovieList.jsx'
+
+
 var Search = (props) => {
   //console.log('is search working?')
   return (
@@ -12,7 +14,7 @@ var Search = (props) => {
         placeholder='Search for a movie'
         onChange={props.change}
       />
-      <button type='button' onClick={(e) => (props.clickFn())}>GO!</button>
+      <button id='search-button' type='button' onClick={(e) => props.clickFn(e.target, props.value)}>Search</button>
     </form>
   );
 };

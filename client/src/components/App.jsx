@@ -2,71 +2,100 @@ import React from 'react';
 import MovieList from './MovieList.jsx'
 import Search from './Search.jsx'
 import AddMovie from './AddMovie.jsx'
-const {useState, useEffect} = React;
+const {useState} = React;
 
 const App = (props) => {
-  // state
-
-  // var movieData = [
-  //   {title: 'Mean Girls'},
-  //   {title: 'Hackers'},
-  //   {title: 'The Grey'},
-  //   {title: 'Sunshine'},
-  //   {title: 'Ex Machina'},
-  // ];
+  /************* STATES ************/
+  // all movies (just holds the data)
   const [movies, setMovies] = useState([]);
-
-  // add fn is adding movies correctly. When we search movies (click Go!) or our movies array is
-  // being re-rendered (re-rendering our entire App component). How do we keep track of the
-  // movie list state variable between re-renders after setState runs?
-
-  // helper fn for filtering movies
-  function movieFilter (query) {
-    console.log(movies);
-    var filtered = movies.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()));
-    // if (filtered.length <= 0) {
-    //   filtered.push({title: 'No movie found!'});
-    // }
-    //console.log(filtered);
-    return filtered;
-  }
+  // filtered movie list (this is what we view and mutate)
+  const [moviesFiltered, setFilteredMovies] = useState([]);
+  // search query
   const [query, setQuery] = useState('');
-  function handleChange (e) {
-    //console.log(e.target.value);
-    setQuery(e.target.value);
-  }
-
-  function handleClick (e) {
-    // invoke helper function
-    console.log('before setMovies: ', movies);
-    // var filteredMovies = movieFilter(query);
-    setMovies(movieFilter(query));
-    console.log('after setMovies: ', movies);
-    setQuery('');
-  }
-  /* ADD MOVIE*/
-
-  // state for add movie input
+  // add movie input
   const [addInput, setAddInput] = useState('');
-  // add text change
-  function handleAddChange (e) {
-    setAddInput(e.target.value);
-    console.log(addInput);
-  }
+  /**********************************/
 
-  // handle click
-  function handleAddClick (e) {
+  /******** Handles Inputs **********/
+  function handleInputChange (e) {
+    console.log('input changing!');
+    console.log(e.target.id);
+    // use event id to choose which if case we enter
+    if(e.target.id === 'movie-search') {
+      setQuery(e.target.value);
+    } else if(e.target.id === 'movie-add') {
+      setAddInput(e.target.value);
+    }
+  }
+  /**********************************/
+
+  /******** Handles Clicks **********/
+  function handleClick (e) {
+    console.log(e);
+    console.log('handleClick invoked!');
+    // use event id to choose which if case we enter
+    if (e.id === 'search-button') {
+      if (e.innerText === 'Search') {
+        e.innerText = 'Back';
+      } else {
+        e.innerText = 'Search';
+      }
+      handleSearch(query);
+    } else if(e.id === 'add-button') {
+      handleAdd(addInput);
+    }
+  }
+  /**********************************/
+
+  /******** Handles Search **********/
+  function handleSearch () {
+    console.log('handleSearch invoked!');
+    // if query is empty show all movies
+    if (query === undefined) {
+      setFilteredMovies(movies);
+      return;
+    }
+    // create filtered array
+    var filtered = movies.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()));
+    // if filtered array is not empty
+    if (filtered.length > 0) {
+      // set state of filtered to the filtered array
+      setFilteredMovies(filtered);
+      // reset search bar state
+      setQuery('');
+    } else {
+      // filtered is empty so no movie contains that query string
+      setFilteredMovies(['no movies found']);
+      // reset search bar state
+      setQuery('');
+    }
+  }
+  /**********************************/
+
+  /***** Handles Adding Movie *******/
+  function handleAdd () {
+    if (addInput === '') {
+      return;
+    }
+    // push new title into movies array
     movies.push({title: addInput});
+    console.log(movies);
+    // set both states of movies and the filtered movies
+    // movies contains all movies and filtered shows only the movies we wont to be shown
+    // movies only ever grows in size, filtered gets reset after each search
     setMovies(movies);
+    setFilteredMovies(movies);
+    // reset add input state
     setAddInput('');
-    //console.log(movies);
   }
+  /**********************************/
 
+  /********** App Render ************/
   return (
     <div>
-      <AddMovie movies={movies} value={addInput} change={handleAddChange} clickFn={handleAddClick}/>
-      <Search value={query} change={handleChange} clickFn={handleClick}/>
-      <MovieList movies={movies} />
+      <AddMovie movies={movies} value={addInput} change={handleInputChange} clickFn={handleClick}/>
+      <Search value={query} change={handleInputChange} clickFn={handleClick}/>
+      <MovieList movies={moviesFiltered} />
     </div>
   )
 };
