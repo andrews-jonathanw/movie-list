@@ -14,7 +14,7 @@ var MovieList = (props) => {
   return (
     <div className='MovieList'>
       <ul>{props.movies.map((movie, index) => (
-      <Movie movie={movie} key={index}></Movie>
+      <Movie movie={movie} key={index} watchList={props.watchList}></Movie>
   ))}</ul></div>);
 }
 
