@@ -77,7 +77,7 @@ const App = (props) => {
       return;
     }
     // push new title into movies array
-    movies.push({title: addInput, watched: false});
+    movies.push({title: addInput, watched: false, year: 1834, runtime: 632, rottenTomato: '69%', director: 'Adam Sandler'});
     // set both states of movies and the filtered movies
     // movies contains all movies and filtered shows only the movies we wont to be shown
     // movies only ever grows in size, filtered gets reset after each search

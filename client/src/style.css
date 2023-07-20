@@ -12,9 +12,9 @@ body {
   grid-template-rows: auto;
   grid-template-areas:
     'header header header'
-    'main main sidebar'
+    'main info sidebar'
     'footer footer footer';
-  height: 50px;
+  height: auto;
   width: 400px;
   border: 2px solid black;
   margin: 1px;
@@ -23,11 +23,26 @@ body {
 
 .movie-item {
   grid-area: main;
+  display: grid;
   margin: 15px;
   text-transform: capitalize;
 }
 
-#watch-toggle {
-  grid-area: sidebar;
+.movie-info {
+  grid-area: info;
+  overflow-wrap: break-word;
+  padding: 20px;
 }
 
+#watch-toggle {
+  grid-area: sidebar;
+  height: 50px;
+  width: auto;
+  margin-top: 25%;
+  margin-bottom: 25%;
+}
+
+.info-item {
+  overflow-wrap: break-word;
+
+}
