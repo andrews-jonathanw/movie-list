@@ -1,0 +1,3 @@
+var API_KEY = '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';
+var MOVIEDB_API_KEY = 'bb238564b47247c5bdbf75404c16fbb7';
+export { API_KEY, MOVIEDB_API_KEY };

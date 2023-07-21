@@ -2,6 +2,7 @@ import React from 'react';
 import MovieList from './MovieList.jsx'
 import Search from './Search.jsx'
 import AddMovie from './AddMovie.jsx'
+import searchMovieDb from '../lib/movieInfoDB.js';
 const {useState} = React;
 
 const App = (props) => {
@@ -76,8 +77,16 @@ const App = (props) => {
     if (addInput === '') {
       return;
     }
+    var movieObj = {
+      title: addInput,
+      watched: false,
+      year: 1834,
+      runtime: 632,
+      rottenTomato: '69%',
+      director: 'Adam Sandler'
+    }
     // push new title into movies array
-    movies.push({title: addInput, watched: false, year: 1834, runtime: 632, rottenTomato: '69%', director: 'Adam Sandler'});
+    movies.push(movieObj);
     // set both states of movies and the filtered movies
     // movies contains all movies and filtered shows only the movies we wont to be shown
     // movies only ever grows in size, filtered gets reset after each search
